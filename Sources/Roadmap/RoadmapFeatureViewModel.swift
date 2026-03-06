@@ -33,14 +33,16 @@ final class RoadmapFeatureViewModel {
     }
 
     func vote() async {
-        let newCount = await configuration.voter.vote(for: feature)
-        voteCount = newCount ?? (voteCount + 1)
-        feature.hasVoted = true
+        if let newCount = await configuration.voter.vote(for: feature) {
+            voteCount = newCount
+            feature.hasVoted = true
+        }
     }
 
     func unvote() async {
-        let newCount = await configuration.voter.unvote(for: feature)
-        voteCount = newCount ?? (voteCount - 1)
-        feature.hasVoted = false
+        if let newCount = await configuration.voter.unvote(for: feature) {
+            voteCount = newCount
+            feature.hasVoted = false
+        }
     }
 }
